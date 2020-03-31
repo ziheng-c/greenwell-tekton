@@ -10,7 +10,7 @@ spec:
       args:
         - echo 'Greenwell Site - Health Check';
           echo "Using https://github.com/ziheng-c/greenwell-tekton.git";
-          echo $(params.apikey)
+          echo "$(params.apikey)"
           sleep 150;
           apt-get -qq update > /dev/null; apt-get -qq -y install curl > /dev/null;
           alive=$(curl https://greenwell-app.eu-de.mybluemix.net/health);
