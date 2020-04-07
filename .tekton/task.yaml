@@ -6,11 +6,21 @@ spec:
   steps:
     - name: task-one-step-one
       image: ubuntu
+      env:
+        - name: PIPELINE_RUN_NAME
+          valueFrom:
+            fieldRef:
+              fieldPath: metadata.labels['tekton.dev/pipelineRun']
+        - name: PIPELINE_RUN_ID
+          valueFrom:
+            fieldRef:
+              fieldPath: metadata.annotations['devops.cloud.ibm.com/tekton-pipeline']
       command: ["bash", "-c"]
       args:
         - echo 'Greenwell Site - Health Check';
           echo "Using https://github.com/ziheng-c/greenwell-tekton.git";
-          sleep 150;
+          echo $PIPELINE_RUN_NAME
+          echo $PIPELINE_RUN_ID
           apt-get -qq update > /dev/null; apt-get -qq -y install curl > /dev/null;
           alive=$(curl https://greenwell-app.eu-de.mybluemix.net/health);
           if [ "$alive" == "200 - Healthy" ];
