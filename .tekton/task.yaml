@@ -18,7 +18,7 @@ spec:
         - name: PIPELINE_RUN_URL
           valueFrom:
             fieldRef:
-              fieldPath: metadata.annotations['devops.cloud.ibm.com/pipelinerun-url']              
+              fieldPath: metadata.annotations['devops.cloud.ibm.com/pipeline-run-url']              
       command: ["bash", "-c"]
       args:
         - echo 'Greenwell Site - Health Check';
