@@ -18,7 +18,11 @@ spec:
         - name: PIPELINE_RUN_URL
           valueFrom:
             fieldRef:
-              fieldPath: metadata.annotations['devops.cloud.ibm.com/pipeline-run-url']              
+              fieldPath: metadata.annotations['devops.cloud.ibm.com/pipeline-run-url']
+        - name: PIPELINE_TRIGGERING_USER
+          valueFrom:
+            fieldRef:
+              fieldPath: metadata.annotations['devops.cloud.ibm.com/triggered-by']
       command: ["bash", "-c"]
       args:
         - echo 'Greenwell Site - Health Check';
@@ -26,6 +30,7 @@ spec:
           echo $PIPELINE_RUN_NAME;
           echo $PIPELINE_RUN_ID;
           echo $PIPELINE_RUN_URL;
+          echo $PIPELINE_TRIGGERING_USER
           apt-get -qq update > /dev/null; apt-get -qq -y install curl > /dev/null;
           alive=$(curl https://greenwell-app.eu-de.mybluemix.net/health);
           if [ "$alive" == "200 - Healthy" ];
