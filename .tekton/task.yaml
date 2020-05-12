@@ -5,7 +5,7 @@ metadata:
 spec:
   steps:
     - name: task-one-step-one
-      image: debian
+      image: ubuntu
       command: ["bash", "-c"]
       args:
         - apt-get -qq update > /dev/null;
