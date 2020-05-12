@@ -11,6 +11,7 @@ spec:
         - apt-get -qq update > /dev/null;
           apt-get -qq -y install apt-utils > /dev/null;
           apt-get -qq -y install curl > /dev/null;
+          sleep 15;
           echo "=======================";
           echo "Greenwell Site - Health Check";
           echo "Using https://github.com/ziheng-c/greenwell-tekton.git";
