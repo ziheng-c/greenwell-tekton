@@ -9,7 +9,6 @@ spec:
       command: ["bash", "-c"]
       args:
         - apt-get -qq update > /dev/null;
-          apt-get -qq -y install apt-utils > /dev/null;
           apt-get -qq -y install curl > /dev/null;
           sleep 15;
           echo "=======================";
