@@ -8,16 +8,15 @@ spec:
       image: ubuntu
       command: ["bash", "-c"]
       args:
-        - echo "Greenwell Site - Health Check";
-          echo "Using https://github.com/ziheng-c/greenwell-tekton.git";
-          sleep 15;
-          echo "Sleep complete";
-          apt-get -qq update;
+        - apt-get -qq update;
           echo "apt-get update complete";
           apt-get -qq -y install apt-utils;
           echo "apt-utils install complete";
           apt-get -qq -y install curl;
           echo "curl install complete";
+          echo "=======================";
+          echo "Greenwell Site - Health Check";
+          echo "Using https://github.com/ziheng-c/greenwell-tekton.git";
           alive=$(curl https://greenwell-app.eu-de.mybluemix.net/health);
           if [ "$alive" == "200 - Healthy" ];
           then echo "TEST PASS - 200"; exit 0;
