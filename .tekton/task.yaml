@@ -5,7 +5,7 @@ metadata:
 spec:
   steps:
     - name: task-one-step-one
-      image: alpine
+      image: ubuntu
       command: ["bash", "-c"]
       args:
         - echo "=======================";
