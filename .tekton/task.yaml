@@ -10,9 +10,9 @@ spec:
       args:
         - apt-get -qq update;
           echo "apt-get update complete";
-          apt-get -qq -y install apt-utils;
+          apt-get -qq -y install apt-utils 2> >( grep -v 'debconf: delaying package configuration, since apt-utils is not installed' >&2 );
           echo "apt-utils install complete";
-          apt-get -qq -y install curl;
+          apt-get -qq -y --no-install-recommends install curl;
           echo "curl install complete";
           echo "=======================";
           echo "Greenwell Site - Health Check";
