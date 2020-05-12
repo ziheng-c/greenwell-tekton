@@ -10,12 +10,12 @@ spec:
       args:
         - apt-get -qq update > /dev/null;
           apt-get -qq -y install apt-utils > /dev/null;
-          apt-get -qq -y --no-install-recommends install curl > /dev/null;
+          apt-get -qq -y install curl > /dev/null;
           echo "=======================";
           echo "Greenwell Site - Health Check";
           echo "Using https://github.com/ziheng-c/greenwell-tekton.git";
           echo "=======================";
-          alive=$(curl https://greenwell-app.eu-de.mybluemix.net/health);
+          alive=$(curl -k https://greenwell-app.eu-de.mybluemix.net/health);
           if [ "$alive" == "200 - Healthy" ];
           then echo "TEST PASS - 200"; exit 0;
           else echo "TEST FAIL - $alive"; exit 1;
