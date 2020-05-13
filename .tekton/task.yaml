@@ -12,8 +12,9 @@ spec:
           echo "Greenwell Site - Health Check";
           echo "Using https://github.com/ziheng-c/greenwell-tekton.git";
           echo "=======================";
-          alive=$(curl -k https://greenwell-app.eu-de.mybluemix.net/health);
+          alive=$(curl -s -S -k https://greenwell-app.eu-de.mybluemix.net/health);
           echo "=======================";
+          echo $alive
           if [ "$alive" == "200 - Healthy" ];
           then echo "TEST PASS - 200"; exit 0;
           else echo "TEST FAIL - $alive"; exit 1;
