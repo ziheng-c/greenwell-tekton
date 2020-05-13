@@ -9,5 +9,5 @@ spec:
       command: ["bash", "-c"]
       args:
         - echo "test2";
-          echo "$(params.test)"
+          echo "$(params.test)";
           exit 0;
