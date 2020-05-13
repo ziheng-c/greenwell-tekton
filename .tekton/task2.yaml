@@ -8,5 +8,6 @@ spec:
       image: ubuntu
       command: ["bash", "-c"]
       args:
-        - echo "test2"
-        - exit 0;
+        - echo "test2";
+          echo "$(params.test)"
+          exit 0;
