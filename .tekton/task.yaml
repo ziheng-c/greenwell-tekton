@@ -5,14 +5,15 @@ metadata:
 spec:
   steps:
     - name: task-one-step-one
-      image: ubuntu
+      image: centos
       command: ["bash", "-c"]
       args:
-        - echo 'Greenwell Site - Health Check';
+        - echo "=======================";
+          echo "Greenwell Site - Health Check";
           echo "Using https://github.com/ziheng-c/greenwell-tekton.git";
-          sleep 15;
-          apt-get -qq update > /dev/null; apt-get -qq -y install curl > /dev/null;
-          alive=$(curl https://greenwell-app.eu-de.mybluemix.net/health);
+          echo "Endpoint - https://greenwell-app.eu-de.mybluemix.net/health";
+          echo "=======================";
+          alive=$(curl -s -S -k https://greenwell-app.eu-de.mybluemix.net/health);
           if [ "$alive" == "200 - Healthy" ];
           then echo "TEST PASS - 200"; exit 0;
           else echo "TEST FAIL - $alive"; exit 1;
