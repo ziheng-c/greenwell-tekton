@@ -12,8 +12,6 @@ spec:
           echo "Greenwell Site - Health Check";
           echo "Using https://github.com/ziheng-c/greenwell-tekton.git";
           echo "=======================";
-          dnf list installed;
-          dnf -y install curl;
           alive=$(curl -k https://greenwell-app.eu-de.mybluemix.net/health);
           if [ "$alive" == "200 - Healthy" ];
           then echo "TEST PASS - 200"; exit 0;
