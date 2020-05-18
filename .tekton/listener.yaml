@@ -13,7 +13,7 @@ spec:
       description: The message to print
       default: This is the default message
   resourcetemplates:
-    - apiVersion: tekton.dev/v1alpha1
+    - apiVersion: tekton.dev/v1beta1
       kind: PipelineResource
       metadata:
         name: git-source-$(uid)
@@ -27,7 +27,7 @@ spec:
             value: $(params.gitrevision)
           - name: url
             value: $(params.gitrepositoryurl)
-    - apiVersion: tekton.dev/v1alpha1
+    - apiVersion: tekton.dev/v1beta1
       kind: PipelineRun
       metadata:
         generateName: sample-pipeline-run-
