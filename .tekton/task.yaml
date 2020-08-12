@@ -32,7 +32,7 @@ spec:
           ##################### Classic Pipeline workaround end #####################################
           TARGET=$( echo "$TARGET" | tr '[:upper:]' '[:lower:]')
           if [ "$TARGET" == "dal" ]; then TARGET="yp"; fi
-          git clone --depth 1 https://$TEST_USERID:$TEST_USERPW@github.ibm.com/org-ids/private-worker-service
+          git clone --depth 1 https://$TEST_USERID:$TEST_PASSWORD@github.ibm.com/org-ids/private-worker-service
           export LANG=en_US.UTF-8
           # otc-system-test/scripts/systemTests.sh -c deployment -p $TEST_PASSWORD -t $SLACK_TOKEN -a $SAUCE_ACCESS -s $SLACK_API_TOKEN $TARGET
 ---
@@ -43,7 +43,7 @@ metadata:
   name: api-tests-config
 data:
   TARGET: ys1-dev
-  TEST_USERID: idsb3t
+  TEST_USERID: zchen
   TEST_USERPW: JhubPa88_0122
 
 ---
