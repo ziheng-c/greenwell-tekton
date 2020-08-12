@@ -9,10 +9,7 @@ spec:
       default: master
     - name: gitrepositoryurl
       description: The git repository url
-    - name: message
-      description: The message to print
-      default: This is the default message
-    - name: api_tests_TEST_PASSWORD
+    - name: TEST_PASSWORD
   resourcetemplates:
     - apiVersion: tekton.dev/v1beta1
       kind: PipelineResource
@@ -28,6 +25,8 @@ spec:
             value: $(params.gitrevision)
           - name: url
             value: $(params.gitrepositoryurl)
+          - name: TEST_PASSWORD
+            value: $(params.api_tests_TEST_PASSWORD)
     - apiVersion: tekton.dev/v1beta1
       kind: PipelineRun
       metadata:
