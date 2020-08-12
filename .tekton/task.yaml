@@ -11,8 +11,8 @@ spec:
       #     name: common-secret
       - configMapRef:
           name: api-tests-config
-      - secretRef:
-          name: api-tests-secret
+      # - secretRef:
+      #     name: api-tests-secret
     env:
       ##################### Classic Pipeline workaround start ###################################
       - name: HOME
@@ -22,6 +22,8 @@ spec:
     - name: api-tests
       image: ibmcom/pipeline-base-image:2.6
       env:
+        -name: TEST_PASSWORD
+        -value: $(inputs.params.api_tests_TEST_PASSWORD}
       command: ["/bin/bash", "-c"]
       args:
         - |
@@ -46,14 +48,14 @@ data:
   TEST_USERID: zchen
   TEST_USERPW: JhubPa88_0122
 
----
-apiVersion: v1
-kind: Secret
-metadata:
-  name: api-tests-secret
-type: Opaque
-stringData:
-  TEST_PASSWORD: $(params.api_tests_TEST_PASSWORD)
-  SLACK_TOKEN: $(params.api_tests_SLACK_TOKEN)
-  SAUCE_ACCESS: $(params.api_tests_SAUCE_ACCESS)
-  SLACK_API_TOKEN: $(params.api_tests_SLACK_API_TOKEN)
+# ---
+# apiVersion: v1
+# kind: Secret
+# metadata:
+#   name: api-tests-secret
+# type: Opaque
+# stringData:
+#   TEST_PASSWORD: $(params.api_tests_TEST_PASSWORD)
+#   SLACK_TOKEN: $(params.api_tests_SLACK_TOKEN)
+#   SAUCE_ACCESS: $(params.api_tests_SAUCE_ACCESS)
+#   SLACK_API_TOKEN: $(params.api_tests_SLACK_API_TOKEN)
