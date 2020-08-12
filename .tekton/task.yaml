@@ -1,21 +1,80 @@
-apiVersion: tekton.dev/v1beta1
+apiVersion: tekton.dev/v1alpha1
 kind: Task
 metadata:
-  name: task1
+  name: api-tests-task
 spec:
+  stepTemplate:
+    envFrom:
+      # - configMapRef:
+      #     name: common-config
+      # - secretRef:
+      #     name: common-secret
+      - configMapRef:
+          name: api-tests-config
+      - secretRef:
+          name: api-tests-secret
+    env:
+      ##################### Classic Pipeline workaround start ###################################
+      - name: HOME
+        value: "/root"
+      ##################### Classic Pipeline workaround end #####################################
   steps:
-    - name: task-one-step-one
-      image: centos
-      command: ["bash", "-c"]
+    - name: api-tests
+      image: ibmcom/pipeline-base-image:2.6
+      env:
+      command: ["/bin/bash", "-c"]
       args:
-        - echo "=======================";
-          echo "Greenwell Site - Health Check";
-          echo "Using https://github.com/ziheng-c/greenwell-tekton.git";
-          echo "Endpoint - https://greenwell-app.eu-de.mybluemix.net/health";
-          echo "=======================";
-          sleep 30;
-          alive=$(curl -s -S -k https://greenwell-app.eu-de.mybluemix.net/health);
-          if [ "$alive" == "200 - Healthy" ];
-          then echo "TEST PASS - 200"; exit 0;
-          else echo "TEST FAIL - $alive"; exit 1;
-          fi
+        - |
+          #!/usr/bin/env bash
+          stepName=api-tests      
+          ##################### Classic Pipeline workaround start ###################################
+          export HOME="/root" # workaround for https://github.com/tektoncd/pipeline/issues/1836
+          ##################### Classic Pipeline workaround end #####################################
+          TARGET=$( echo "$TARGET" | tr '[:upper:]' '[:lower:]')
+          if [ "$TARGET" == "dal" ]; then TARGET="yp"; fi
+          git clone --depth 1 https://$IDS_USER:$IDS_TOKEN@github.ibm.com/org-ids/otc-system-test
+          export LANG=en_US.UTF-8
+          # otc-system-test/scripts/systemTests.sh -c deployment -p $TEST_PASSWORD -t $SLACK_TOKEN -a $SAUCE_ACCESS -s $SLACK_API_TOKEN $TARGET
+---
+
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: api-tests-config
+data:
+  TARGET: ys1-dev
+  ibmid: idsqat3@us.ibm.com
+  ApiAddToolchain_ibmid: idsqat2@us.ibm.com
+  ApiCollaborate_ibmid: idsqat4@us.ibm.com
+  ApiMicroservices_ibmid: idsqat2@us.ibm.com
+  ApiSimplePipeline_ibmid: idsqat1@us.ibm.com
+  ApiPagerDuty_ibmid: idsqat4@us.ibm.com
+  ApiToolInt_ibmid: idsqat4@us.ibm.com
+  ApiSlack_ibmid: idsqat4@us.ibm.com
+  ApiToolchainTemplates_ibmid: idsqat1@us.ibm.com
+  ApiOrion_ibmid: idsqat2@us.ibm.com
+
+---
+apiVersion: v1
+kind: Secret
+metadata:
+  name: api-tests-secret
+type: Opaque
+stringData:
+  TEST_PASSWORD: $(params.api_tests_TEST_PASSWORD)
+  SLACK_TOKEN: $(params.api_tests_SLACK_TOKEN)
+  SAUCE_ACCESS: $(params.api_tests_SAUCE_ACCESS)
+  SLACK_API_TOKEN: $(params.api_tests_SLACK_API_TOKEN)
+  idsqat1_rsa: $(params.api_tests_idsqat1_rsa)
+  idsqat3_rsa: $(params.api_tests_idsqat3_rsa)
+  apiKey: $(params.api_tests_dev_main_api_key)
+  ApiAddToolchain_apiKey: $(params.api_tests_dev_idsqat2_api_key)
+  ApiCollaborate_apiKey: $(params.api_tests_dev_idsqat4_api_key)
+  ApiMicroservices_apiKey: $(params.api_tests_dev_idsqat2_api_key)
+  ApiSimplePipeline_apiKey: $(params.api_tests_dev_idsqat1_api_key)
+  ApiPagerDuty_apiKey: $(params.api_tests_dev_idsqat4_api_key)
+  ApiToolInt_apiKey: $(params.api_tests_dev_idsqat4_api_key)
+  ApiSlack_apiKey: $(params.api_tests_dev_idsqat4_api_key)
+  ApiToolchainTemplates_apiKey: $(params.api_tests_dev_idsqat1_api_key)
+  ApiOrion_apiKey: $(params.api_tests_dev_idsqat2_api_key)
+  test_slackWebHook: $(params.api_tests_test_slackWebHook)
