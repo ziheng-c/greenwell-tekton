@@ -43,7 +43,7 @@ metadata:
   name: api-tests-config
 data:
   TARGET: ys1-dev
-  TEST_USERID: idsb3t2@us.ibm.com
+  TEST_USERID: idsb3t
   TEST_USERPW: JhubPa88_0122
 
 ---
