@@ -4,6 +4,6 @@ metadata:
   name: sample-pipeline
 spec:
   tasks:
-    - name: task1
+    - name: api-tests
       taskRef:
-        name: task1
+        name: api-tests-task
