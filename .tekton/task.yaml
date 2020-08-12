@@ -3,6 +3,8 @@ kind: Task
 metadata:
   name: api-tests-task
 spec:
+  params:
+    -name: TEST_PASSWORD
   stepTemplate:
     envFrom:
       # - configMapRef:
