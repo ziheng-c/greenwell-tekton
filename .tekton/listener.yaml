@@ -1,63 +1,44 @@
 apiVersion: tekton.dev/v1beta1
-kind: TriggerTemplate
+kind: EventListener
 metadata:
-  name: pipeline-template
+  name: api-test-listener
 spec:
-  params:
-    - name: TEST_PASSWORD
-      description: test password
-    - name: target_repo
-    - name: test_password
-  resourcetemplates:
-    - apiVersion: tekton.dev/v1beta1
-      kind: PipelineResource
-      metadata:
-        name: git-source-$(uid)
-        labels:
-          triggertemplated: "true"
-          generatedBy: "triggers-example"
-      spec:
-        type: git
-        params:
-          - name: TEST_PASSWORD
-            value: $(params.api_tests_TEST_PASSWORD)
-    - apiVersion: tekton.dev/v1beta1
-      kind: PipelineRun
-      metadata:
-        generateName: pipeline-run-$(uid)
-        labels:
-          triggertemplated: "true"
-          generatedBy: "triggers-example"
-      spec:
-        pipelineRef:
-          name: sample-pipeline
-        params:
-        - name: target_repo
-          value: $(params.target_repo)
-        - name: test_password
-          value: $(params.test_password)
+  triggers:
+    - binding:
+        name: api-test-pipeline-binding
+      template:
+        name: api-test-pipeline-template
 ---
 apiVersion: tekton.dev/v1beta1
 kind: TriggerBinding
 metadata:
-  name: pipeline-binding
-spec:
-  params:
-    - name: gitrevision
-      value: $(event.head_commit.id)
-    - name: gitrepositoryurl
-      value: $(event.repository.url)
+  name: api-test-pipeline-binding
 ---
 apiVersion: tekton.dev/v1beta1
-kind: EventListener
+kind: TriggerTemplate
 metadata:
-  name: listener-api test
+  name: api-test-pipeline-template
 spec:
-  triggers:
-    - binding:
-        name: pipeline-binding
-      template:
-        name: pipeline-template
-      params:
-        - name: message
-          value: Hello from the Git Triggers EventListener!
+  params:
+    - name: target_repo
+      description: target_repod property
+    - name: test_password
+      description: Untarget_repod property
+  resourcetemplates:
+    - apiVersion: tekton.dev/v1beta1
+      kind: PipelineRun
+      metadata:
+        generateName: api-test-pipeline-run-$(uid)
+        labels:
+          triggertemplated: "true"
+          generatedBy: "echo-example"
+      spec:
+        pipelineRef:
+          name: api-test-pipeline
+        params:
+          - name: target_repo
+            value: $(params.target_repo)
+          - name: test_password
+            value: $(params.test_password)
+          - name: environment_value
+            value: $(params.environment)  

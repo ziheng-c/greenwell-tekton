@@ -1,8 +1,18 @@
 apiVersion: tekton.dev/v1beta1
 kind: Pipeline
 metadata:
-  name: sample-pipeline
+  name: api-test-pipeline
 spec:
+  params:
+    - name: target_repo
+      description: simple target_repod property
+      default: TESTtarget_repo
+    - name: test_password
+      description: simple untarget_repod property
+      default: TESTtest_password
+    - name: environment_value
+      description: A value from the pipeline level, trigger level or run level
+      default: BLOOPER  
   tasks:
     - name: api-tests
       taskRef:
