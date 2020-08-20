@@ -4,15 +4,16 @@ metadata:
   name: api-tests-task
 spec:
   params:
-    -name: TEST_PASSWORD
+    - name: test_password
+    - name: target_repo
   stepTemplate:
-    envFrom:
+    # envFrom:
       # - configMapRef:
       #     name: common-config
       # - secretRef:
       #     name: common-secret
-      - configMapRef:
-          name: api-tests-config
+      # - configMapRef:
+      #     name: api-tests-config
       # - secretRef:
       #     name: api-tests-secret
     env:
@@ -24,8 +25,10 @@ spec:
     - name: api-tests
       image: ibmcom/pipeline-base-image:2.6
       env:
-        -name: TEST_PASSWORD
-        -value: $(inputs.params.api_tests_TEST_PASSWORD}
+        - name: TEST_PASSWORD
+          value: $(inputs.params.test_password}
+        - name: TARGET_REPO
+          value: $(inputs.params.target_repo}
       command: ["/bin/bash", "-c"]
       args:
         - |
@@ -35,6 +38,8 @@ spec:
           export HOME="/root" # workaround for https://github.com/tektoncd/pipeline/issues/1836
           ##################### Classic Pipeline workaround end #####################################
           TARGET=$( echo "$TARGET" | tr '[:upper:]' '[:lower:]')
+          echo $TEST_PASSWORD
+          echo $TARGET_REPO
           if [ "$TARGET" == "dal" ]; then TARGET="yp"; fi
           git clone --depth 1 https://$TEST_USERID:ec5d88cb6743f80a5cceace3d70690cddb9b7887@github.ibm.com/org-ids/private-worker-service
           cd private-worker-service

@@ -3,7 +3,15 @@ kind: Pipeline
 metadata:
   name: sample-pipeline
 spec:
+  params:
+    - name: target_repo
+      description: target test repo
+      default: github.ibm.com/org-ids/private-worker-service
+spec:
   tasks:
     - name: api-tests
       taskRef:
         name: api-tests-task
+      params:
+        - name: target_repo
+          value: $(params.target_repo)

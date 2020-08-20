@@ -4,12 +4,8 @@ metadata:
   name: pipeline-template
 spec:
   params:
-    - name: gitrevision
-      description: The git revision
-      default: master
-    - name: gitrepositoryurl
-      description: The git repository url
     - name: TEST_PASSWORD
+      description: test password
   resourcetemplates:
     - apiVersion: tekton.dev/v1beta1
       kind: PipelineResource
@@ -21,16 +17,12 @@ spec:
       spec:
         type: git
         params:
-          - name: revision
-            value: $(params.gitrevision)
-          - name: url
-            value: $(params.gitrepositoryurl)
           - name: TEST_PASSWORD
             value: $(params.api_tests_TEST_PASSWORD)
     - apiVersion: tekton.dev/v1beta1
       kind: PipelineRun
       metadata:
-        generateName: sample-pipeline-run-
+        generateName: pipeline-run-
         labels:
           triggertemplated: "true"
           generatedBy: "triggers-example"
