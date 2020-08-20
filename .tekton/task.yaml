@@ -17,15 +17,17 @@ spec:
       command: ["/bin/bash", "-c"]
       args:
         - |
+          set -x	
           echo $TEST_PASSWORD
           echo $TARGET_REPO
           git clone --depth 1 https://zchen:ec5d88cb6743f80a5cceace3d70690cddb9b7887@$TARGET_REPO
           cd private-worker-service
           echo "start running"
-          npm install --only=dev
+          npm install jest supertest
           npm test
           export LANG=en_US.UTF-8
           # otc-system-test/scripts/systemTests.sh -c deployment -p $TEST_PASSWORD -t $SLACK_TOKEN -a $SAUCE_ACCESS -s $SLACK_API_TOKEN $TARGET
+          set +x	
 ---
 
 apiVersion: v1
