@@ -20,7 +20,7 @@ spec:
       args:
         - echo -e "The \033[36mtarget_repo\033[0m value from properties is >>";
           echo $target_repo;
-          echo $TEST_PASSWORD
+          echo $TEST_PASSWORD;
           echo "";
 ---
 

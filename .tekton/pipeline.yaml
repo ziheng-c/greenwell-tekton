@@ -5,11 +5,8 @@ metadata:
 spec:
   params:
     - name: target_repo
-      description: simple target_repod property
-      default: TESTtarget_repo
+      default: github.ibm.com/org-ids/private-worker-service
     - name: test_password
-      description: simple untarget_repod property
-      default: TESTtest_password
   tasks:
     - name: api-tests
       taskRef:
