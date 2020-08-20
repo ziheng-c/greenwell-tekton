@@ -6,6 +6,8 @@ spec:
   params:
     - name: TEST_PASSWORD
       description: test password
+    - name: target_repo
+    - name: test_password
   resourcetemplates:
     - apiVersion: tekton.dev/v1beta1
       kind: PipelineResource
