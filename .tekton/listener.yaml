@@ -21,9 +21,7 @@ metadata:
 spec:
   params:
     - name: target_repo
-      description: target_repod property
     - name: test_password
-      description: Untarget_repod property
   resourcetemplates:
     - apiVersion: tekton.dev/v1beta1
       kind: PipelineRun
