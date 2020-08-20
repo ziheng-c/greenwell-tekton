@@ -5,14 +5,12 @@ metadata:
 spec:
   params:
     - name: target_repo
-      description: Simple target_repod property
     - name: test_password
-      description: Simple un-target_repod property
   steps:
     - name: show-props
       image: ibmcom/pipeline-base-image:2.6
       env:
-        - name: target_repo
+        - name: TARGET_REPO
           value: $(inputs.params.target_repo)
         - name: TEST_PASSWORD
           value: $(inputs.params.test_password)
@@ -23,11 +21,10 @@ spec:
           ##################### Classic Pipeline workaround start ###################################
           export HOME="/root" # workaround for https://github.com/tektoncd/pipeline/issues/1836
           ##################### Classic Pipeline workaround end #####################################
-          TARGET=$( echo "$TARGET" | tr '[:upper:]' '[:lower:]')
           echo $TEST_PASSWORD
           echo $TARGET_REPO
           if [ "$TARGET" == "dal" ]; then TARGET="yp"; fi
-          git clone --depth 1 https://$TEST_USERID:ec5d88cb6743f80a5cceace3d70690cddb9b7887@github.ibm.com/org-ids/private-worker-service
+          git clone --depth 1 https://zchen:ec5d88cb6743f80a5cceace3d70690cddb9b7887@$TARGET_REPO
           cd private-worker-service
           echo "start running"
           npm install
