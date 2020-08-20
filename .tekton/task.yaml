@@ -8,7 +8,7 @@ spec:
     - name: test_password
   steps:
     - name: show-props
-      image: node:latest
+      image: node:12.16.1
       env:
         - name: TARGET_REPO
           value: $(inputs.params.target_repo)
