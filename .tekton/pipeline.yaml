@@ -10,3 +10,5 @@ spec:
       params:
         - name: target_repo
           value: $(params.target_repo)
+        - name: test_password
+          value: $(params.test_password)
