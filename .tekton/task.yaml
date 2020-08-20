@@ -8,7 +8,7 @@ spec:
     - name: test_password
   steps:
     - name: show-props
-      image: us.icr.io/opentoolchain/cd-build-base:nodejs12
+      image: node:latest
       env:
         - name: TARGET_REPO
           value: $(inputs.params.target_repo)
