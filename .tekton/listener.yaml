@@ -40,5 +40,3 @@ spec:
             value: $(params.target_repo)
           - name: test_password
             value: $(params.test_password)
-          - name: environment_value
-            value: $(params.environment)  

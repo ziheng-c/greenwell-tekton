@@ -8,8 +8,6 @@ spec:
       description: Simple target_repod property
     - name: test_password
       description: Simple un-target_repod property
-    - name: environment_value
-      description: Value from pipeline, trigger, or run property    
   steps:
     - name: show-props
       image: ibmcom/pipeline-base-image:2.6
@@ -18,16 +16,12 @@ spec:
           value: $(inputs.params.target_repo)
         - name: TEST_PASSWORD
           value: $(inputs.params.test_password)
-        - name: ENVIRONMENT_VALUE
-          value: $(params.environment_value)    
       command: ["/bin/bash", "-c"]
       args:
         - echo -e "The \033[36mtarget_repo\033[0m value from properties is >>";
           echo $target_repo;
           echo $TEST_PASSWORD
           echo "";
-          echo -e "The \033[36menvironment\033[0m value from properties is >>";
-          echo $ENVIRONMENT_VALUE
 ---
 
 apiVersion: v1

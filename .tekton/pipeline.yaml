@@ -10,9 +10,6 @@ spec:
     - name: test_password
       description: simple untarget_repod property
       default: TESTtest_password
-    - name: environment_value
-      description: A value from the pipeline level, trigger level or run level
-      default: BLOOPER  
   tasks:
     - name: api-tests
       taskRef:
