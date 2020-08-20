@@ -22,13 +22,18 @@ spec:
     - apiVersion: tekton.dev/v1beta1
       kind: PipelineRun
       metadata:
-        generateName: pipeline-run-
+        generateName: pipeline-run-$(uid)
         labels:
           triggertemplated: "true"
           generatedBy: "triggers-example"
       spec:
         pipelineRef:
           name: sample-pipeline
+        params:
+        - name: target_repo
+          value: $(params.target_repo)
+        - name: test_password
+          value: $(params.test_password)
 ---
 apiVersion: tekton.dev/v1beta1
 kind: TriggerBinding
