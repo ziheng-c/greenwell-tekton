@@ -26,9 +26,9 @@ spec:
       image: ibmcom/pipeline-base-image:2.6
       env:
         - name: TEST_PASSWORD
-          value: $(inputs.params.test_password}
+          value: $(inputs.params.test_password)
         - name: TARGET_REPO
-          value: $(inputs.params.target_repo}
+          value: $(inputs.params.target_repo)
       command: ["/bin/bash", "-c"]
       args:
         - |
