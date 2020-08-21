@@ -4,23 +4,29 @@ metadata:
   name: api-tests-task
 spec:
   params:
-    - name: target_repo
+    - name: test_user
     - name: test_password
+    - name: PW_SERVICE_ID
+    - name: PW_API_KEY
   steps:
     - name: show-props
       image: node:12.16.1
       env:
-        - name: TARGET_REPO
-          value: $(inputs.params.target_repo)
+        - name: TEST_USER
+          value: $(inputs.params.test_user)
         - name: TEST_PASSWORD
           value: $(inputs.params.test_password)
+        - name: PW_SERVICE_ID
+          value: $(inputs.params.PW_SERVICE_ID)
+        - name: PW_API_KEY
+          value: $(inputs.params.PW_API_KEY)
       command: ["/bin/bash", "-c"]
       args:
         - |
           set -x	
           echo $TEST_PASSWORD
-          echo $TARGET_REPO
-          git clone --depth 1 https://zchen:ec5d88cb6743f80a5cceace3d70690cddb9b7887@$TARGET_REPO
+          echo $TEST_USER
+          git clone --depth 1 https://$TEST_USER:$TEST_PASSWORD@$github.ibm.com/org-ids/private-worker-service
           cd private-worker-service
           echo "start running"
           npm install --no-package-lock --no-save --quiet jest supertest
@@ -58,7 +64,7 @@ data:
           # ##################### Classic Pipeline workaround end #####################################
           # TARGET=$( echo "$TARGET" | tr '[:upper:]' '[:lower:]')
           # echo $TEST_PASSWORD
-          # echo $TARGET_REPO
+          # echo $TEST_USER
           # if [ "$TARGET" == "dal" ]; then TARGET="yp"; fi
           # git clone --depth 1 https://$TEST_USERID:ec5d88cb6743f80a5cceace3d70690cddb9b7887@github.ibm.com/org-ids/private-worker-service
           # cd private-worker-service

@@ -20,7 +20,7 @@ metadata:
   name: api-test-pipeline-template
 spec:
   params:
-    - name: target_repo
+    - name: test_user
     - name: test_password
   resourcetemplates:
     - apiVersion: tekton.dev/v1beta1
@@ -34,7 +34,11 @@ spec:
         pipelineRef:
           name: api-test-pipeline
         params:
-          - name: target_repo
-            value: $(params.target_repo)
+          - name: test_user
+            value: $(params.test_user)
           - name: test_password
             value: $(params.test_password)
+          - name: PW_SERVICE_ID
+            value: $(params.PW_SERVICE_ID)
+          - name: PW_API_KEY
+            value: $(params.PW_API_KEY)

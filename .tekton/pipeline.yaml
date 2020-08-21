@@ -4,15 +4,18 @@ metadata:
   name: api-test-pipeline
 spec:
   params:
-    - name: target_repo
-      default: github.ibm.com/org-ids/private-worker-service
+    - name: test_user
     - name: test_password
   tasks:
     - name: api-tests
       taskRef:
         name: api-tests-task
       params:
-        - name: target_repo
-          value: $(params.target_repo)
+        - name: test_user
+          value: $(params.test_user)
         - name: test_password
           value: $(params.test_password)
+        - name: PW_SERVICE_ID
+          value: $(params.PW_SERVICE_ID)
+        - name: PW_API_KEY
+          value: $(params.PW_API_KEY)
