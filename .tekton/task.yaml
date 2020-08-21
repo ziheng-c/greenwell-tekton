@@ -26,7 +26,7 @@ spec:
           set -x	
           echo $TEST_PASSWORD
           echo $TEST_USER
-          git clone --depth 1 https://$TEST_USER:$TEST_PASSWORD@$github.ibm.com/org-ids/private-worker-service
+          git clone --depth 1 https://$TEST_USER:$TEST_PASSWORD@github.ibm.com/org-ids/private-worker-service
           cd private-worker-service
           echo "start running"
           npm install --no-package-lock --no-save --quiet jest supertest
