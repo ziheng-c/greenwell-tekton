@@ -31,6 +31,8 @@ spec:
           echo "start running"
           npm install --no-package-lock --no-save --quiet jest supertest
           npm test
+          exit_status=$?
+          exit $exit_status
           set +x	
 ---
 
