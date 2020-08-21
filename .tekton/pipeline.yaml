@@ -6,6 +6,8 @@ spec:
   params:
     - name: test_user
     - name: test_password
+    - name: PW_SERVICE_ID
+    - name: PW_API_KEY
   tasks:
     - name: api-tests
       taskRef:
