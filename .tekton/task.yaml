@@ -31,8 +31,7 @@ spec:
           echo "start running"
           npm install --no-package-lock --no-save --quiet jest supertest
           npm test
-          export LANG=en_US.UTF-8
-          # otc-system-test/scripts/systemTests.sh -c deployment -p $TEST_PASSWORD -t $SLACK_TOKEN -a $SAUCE_ACCESS -s $SLACK_API_TOKEN $TARGET
+          exit $?
           set +x	
 ---
 
