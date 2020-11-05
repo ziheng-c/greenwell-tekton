@@ -1,21 +1,21 @@
 apiVersion: tekton.dev/v1beta1
 kind: Task
 metadata:
-  name: task1
+  name: key-protect
 spec:
+  params:
+    - name: e2e_key_protect_api_key
+      description: api key property
   steps:
-    - name: task-one-step-one
-      image: centos
+    - name: key-protect-test
+      image: ibmcom/pipeline-base-image:2.9
+      env:
+        - name: E2E_KEY_PROTECT_API_KEY
+          value: $(inputs.params.e2e_key_protect_api_key)
       command: ["bash", "-c"]
       args:
-        - echo "=======================";
-          echo "Greenwell Site - Health Check";
-          echo "Using https://github.com/ziheng-c/greenwell-tekton.git";
-          echo "Endpoint - https://greenwell-app.eu-de.mybluemix.net/health";
-          echo "=======================";
-          sleep 60;
-          alive=$(curl -s -S -k https://greenwell-app.eu-de.mybluemix.net/health);
-          if [ "$alive" == "200 - Healthy" ];
-          then echo "TEST PASS - 200"; exit 0;
-          else echo "TEST FAIL - $alive"; exit 1;
-          fi
+        - |
+          #!/usr/bin/env bash
+          echo "Key Protect Test"
+          echo "================"
+          ibmcloud login --apikey ${E2E_KEY_PROTECT_API_KEY} --no-region
