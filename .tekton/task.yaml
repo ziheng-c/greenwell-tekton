@@ -4,19 +4,19 @@ metadata:
   name: key-protect
 spec:
   params:
-    - name: key_protect_apikey
+    - name: key-protect-apikey
       description: api key property
   steps:
     - name: key-protect-test
       image: ibmcom/pipeline-base-image:2.9
       env:
-        - name: key_protect_apikey
-          value: $(inputs.params.key_protect_apikey)
+        - name: key-protect-apikey
+          value: $(params.key-protect-apikey)
       command: ["bash", "-c"]
       args:
         - |
           #!/usr/bin/env bash
           echo "Key Protect Test"
           echo "================"
-          echo "apikey: ${key_protect_apikey}"
-          ibmcloud login --apikey ${key_protect_apikey} --no-region
+          echo "apikey: ${key-protect-apikey}"
+          ibmcloud login --apikey ${key-protect-apikey} --no-region

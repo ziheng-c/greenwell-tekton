@@ -4,7 +4,7 @@ metadata:
   name: key-protect-test-template
 spec:
   params:
-    - name: key_protect_apikey
+    - name: key-protect-apikey
       description: api key property
   resourcetemplates:
     - apiVersion: tekton.dev/v1beta1
@@ -17,8 +17,8 @@ spec:
         pipelineRef:
           name: key-protect-test-pipeline
         params:
-          - name: key_protect_apikey
-            value: $(params.key_protect_apikey)
+          - name: key-protect-apikey
+            value: $(params.key-protect-apikey)
 ---
 apiVersion: tekton.dev/v1beta1
 kind: TriggerBinding
