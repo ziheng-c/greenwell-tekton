@@ -4,12 +4,12 @@ metadata:
   name: key-protect-test-pipeline
 spec:
   params:
-    - name: e2e_key_protect_api_key
+    - name: key_protect_apikey
       description: api key property
   tasks:
     - name: key-protect
       taskRef:
         name: key-protect
       params:
-        - name: e2e_key_protect_api_key
-          value: $(params.e2e_key_protect_api_key)
+        - name: key_protect_apikey
+          value: $(params.key_protect_apikey)
