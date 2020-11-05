@@ -11,7 +11,7 @@ spec:
       image: ibmcom/pipeline-base-image:2.9
       env:
         - name: KEY_PROTECT_APIKEY
-          value: $(params.key-protect-apikey)
+          value: $(input.params.key-protect-apikey)
       command: ["bash", "-c"]
       args:
         - |
