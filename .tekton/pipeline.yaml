@@ -1,9 +1,15 @@
 apiVersion: tekton.dev/v1beta1
 kind: Pipeline
 metadata:
-  name: sample-pipeline
+  name: key-protect-test-pipeline
 spec:
+  params:
+    - name: key-protect-apikey
+      description: api key property
   tasks:
-    - name: task1
+    - name: key-protect
       taskRef:
-        name: task1
+        name: key-protect
+      params:
+        - name: key-protect-apikey
+          value: $(params.key-protect-apikey)
