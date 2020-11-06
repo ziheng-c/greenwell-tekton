@@ -2,6 +2,7 @@ apiVersion: tekton.dev/v1beta1
 kind: Pipeline
 metadata:
   name: key-protect-test-pipeline
+  description: A test pipeline for using key protect in tekton properties
 spec:
   params:
     - name: key-protect-apikey
