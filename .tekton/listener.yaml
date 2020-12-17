@@ -6,6 +6,8 @@ spec:
   params:
     - name: key-protect-apikey
       description: api key property
+    - name: key-protect-endpoint
+      description: ibmcloud endpoint
   resourcetemplates:
     - apiVersion: tekton.dev/v1beta1
       kind: PipelineRun
@@ -19,6 +21,8 @@ spec:
         params:
           - name: key-protect-apikey
             value: $(params.key-protect-apikey)
+          - name: key-protect-endpoint
+            value: $(params.key-protect-endpoint)
 ---
 apiVersion: tekton.dev/v1beta1
 kind: TriggerBinding

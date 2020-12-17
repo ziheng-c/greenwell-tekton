@@ -6,17 +6,21 @@ spec:
   params:
     - name: key-protect-apikey
       description: api key property
+    - name: key-protect-endpoint
+      description: ibmcloud endpoint
   steps:
     - name: key-protect-test
       image: ibmcom/pipeline-base-image:2.9
       env:
         - name: KEY_PROTECT_APIKEY
           value: $(inputs.params.key-protect-apikey)
+        - name: KEY_PROTECT_ENDPOINT
+          value: $(inputs.params.key-protect-endpoint)
       command: ["bash", "-c"]
       args:
         - |
           #!/usr/bin/env bash
           echo "Key Protect Test"
           echo "================"
-          echo "apikey: ${KEY_PROTECT_APIKEY}"
-          ibmcloud login --apikey ${KEY_PROTECT_APIKEY} --no-region
+          echo "env: ${KEY_PROTECT_ENDPOINT}"
+          ibmcloud login -a ${KEY_PROTECT_ENDPOINT} --apikey ${KEY_PROTECT_APIKEY} --no-region

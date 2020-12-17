@@ -7,6 +7,8 @@ spec:
   params:
     - name: key-protect-apikey
       description: api key property
+    - name: key-protect-endpoint
+      description: ibmcloud endpoint
   tasks:
     - name: key-protect
       taskRef:
@@ -14,3 +16,5 @@ spec:
       params:
         - name: key-protect-apikey
           value: $(params.key-protect-apikey)
+        - name: key-protect-endpoint
+          value: $(params.key-protect-endpoint)
