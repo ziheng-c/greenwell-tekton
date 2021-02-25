@@ -68,7 +68,7 @@ spec:
       command: ["/bin/bash", "-c"]
       args:
         - count = 0;
-          while count < 100
+          while count < 100; do
             count = count + 1;
             echo $ENVIRONMENT;
             test=`echo ${SECURE_VALUE}`;
