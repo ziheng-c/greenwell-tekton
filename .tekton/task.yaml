@@ -67,10 +67,10 @@ spec:
               key: environment  
       command: ["/bin/bash", "-c"]
       args:
-        - for (( i=0 ; i<50 ; i++ )); do;
+        - for (( i=0 ; i<50 ; i++ ));
             echo $ENVIRONMENT;
             test=`echo ${SECURE_VALUE}`;
-          done    
+          done;
           echo -e "\033[36menvironment\033[0m from ConfigMap is >>";
           echo $ENVIRONMENT;
           echo "";
