@@ -67,7 +67,7 @@ spec:
               key: environment  
       command: ["/bin/bash", "-c"]
       args:
-        - for (( i=0 ; i<50 ; i++ )); do
+        - for (( i=0 ; i<50 ; i++ ));
             echo $ENVIRONMENT;
             test=`echo ${SECURE_VALUE}`;
           done    
