@@ -1,89 +1,44 @@
 apiVersion: tekton.dev/v1beta1
+kind: EventListener
+metadata:
+  name: echo-listener
+spec:
+  triggers:
+    - binding:
+        name: echo-pipeline-binding
+      template:
+        name: echo-pipeline-template
+---
+apiVersion: tekton.dev/v1beta1
+kind: TriggerBinding
+metadata:
+  name: echo-pipeline-binding
+---
+apiVersion: tekton.dev/v1beta1
 kind: TriggerTemplate
 metadata:
-  name: pipeline-template
+  name: echo-pipeline-template
 spec:
   params:
-    - name: gitrevision
-      description: The git revision
-      default: master
-    - name: gitrepositoryurl
-      description: The git repository url
-    - name: message
-      description: The message to print
-      default: This is the default message
+    - name: quote
+      description: Quoted property
+    - name: noquote
+      description: UnQuoted property
   resourcetemplates:
-    - apiVersion: tekton.dev/v1beta1
-      kind: PipelineResource
-      metadata:
-        name: git-source-$(uid)
-        labels:
-          triggertemplated: "true"
-          generatedBy: "triggers-example"
-      spec:
-        type: git
-        params:
-          - name: revision
-            value: $(params.gitrevision)
-          - name: url
-            value: $(params.gitrepositoryurl)
     - apiVersion: tekton.dev/v1beta1
       kind: PipelineRun
       metadata:
-        generateName: sample-pipeline-run-$(uid)
+        generateName: echo-pipeline-run-
         labels:
           triggertemplated: "true"
-          generatedBy: "triggers-example"
+          generatedBy: "echo-example"
       spec:
         pipelineRef:
-          name: sample-pipeline
----
-apiVersion: tekton.dev/v1beta1
-kind: TriggerBinding
-metadata:
-  name: pipeline-binding
-spec:
-  params:
-    - name: gitrevision
-      value: $(event.head_commit.id)
-    - name: gitrepositoryurl
-      value: $(event.repository.url)
----
-apiVersion: tekton.dev/v1beta1
-kind: TriggerBinding
-metadata:
-  name: manual-pipeline-binding
-spec:
-  params:
-    - name: gitrevision
-      value: v0.32.0
-    - name: gitrepositoryurl
-      value: https://github.com/GoogleContainerTools/skaffold
----
-apiVersion: tekton.dev/v1beta1
-kind: EventListener
-metadata:
-  name: listener
-spec:
-  triggers:
-    - binding:
-        name: pipeline-binding
-      template:
-        name: pipeline-template
-      params:
-        - name: message
-          value: Hello from the Git Triggers EventListener!
----
-apiVersion: tekton.dev/v1beta1
-kind: EventListener
-metadata:
-  name: manual-listener
-spec:
-  triggers:
-    - binding:
-        name: manual-pipeline-binding
-      template:
-        name: pipeline-template
-      params:
-        - name: message
-          value: Hello from the Manual Triggers EventListener!
+          name: echo-props-pipeline
+        params:
+          - name: quote
+            value: $(params.quote)
+          - name: noquote
+            value: $(params.noquote)
+          - name: environment_value
+            value: $(params.environment) 
