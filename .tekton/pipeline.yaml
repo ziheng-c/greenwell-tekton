@@ -1,20 +1,20 @@
 apiVersion: tekton.dev/v1beta1
 kind: Pipeline
 metadata:
-  name: key-protect-test-pipeline
-  description: A test pipeline for using key protect in tekton properties
+  name: secrets-manager-test-pipeline
+  description: A test pipeline for using Secrets Manager in tekton properties
 spec:
   params:
-    - name: key-protect-apikey
+    - name: secrets-manager-apikey
       description: api key property
-    - name: key-protect-endpoint
+    - name: secrets-manager-endpoint
       description: ibmcloud endpoint
   tasks:
-    - name: key-protect
+    - name: secrets-manager
       taskRef:
-        name: key-protect
+        name: secrets-manager
       params:
-        - name: key-protect-apikey
-          value: $(params.key-protect-apikey)
-        - name: key-protect-endpoint
-          value: $(params.key-protect-endpoint)
+        - name: secrets-manager-apikey
+          value: $(params.secrets-manager-apikey)
+        - name: secrets-manager-endpoint
+          value: $(params.secrets-manager-endpoint)

@@ -1,41 +1,41 @@
 apiVersion: tekton.dev/v1beta1
 kind: TriggerTemplate
 metadata:
-  name: key-protect-test-template
+  name: secrets-manager-test-template
 spec:
   params:
-    - name: key-protect-apikey
+    - name: secrets-manager-apikey
       description: api key property
-    - name: key-protect-endpoint
+    - name: secrets-manager-endpoint
       description: ibmcloud endpoint
   resourcetemplates:
     - apiVersion: tekton.dev/v1beta1
       kind: PipelineRun
       metadata:
-        generateName: key-protect-test-
+        generateName: secrets-manager-test-
         labels:
           triggertemplated: "true"
       spec:
         pipelineRef:
-          name: key-protect-test-pipeline
+          name: secrets-manager-test-pipeline
         params:
-          - name: key-protect-apikey
-            value: $(params.key-protect-apikey)
-          - name: key-protect-endpoint
-            value: $(params.key-protect-endpoint)
+          - name: secrets-manager-apikey
+            value: $(params.secrets-manager-apikey)
+          - name: secrets-manager-endpoint
+            value: $(params.secrets-manager-endpoint)
 ---
 apiVersion: tekton.dev/v1beta1
 kind: TriggerBinding
 metadata:
-  name: key-protect-test-binding
+  name: secrets-manager-test-binding
 ---
 apiVersion: tekton.dev/v1beta1
 kind: EventListener
 metadata:
-  name: key-protect-test-listener
+  name: secrets-manager-test-listener
 spec:
   triggers:
     - binding:
-        name: key-protect-test-binding
+        name: secrets-manager-test-binding
       template:
-        name: key-protect-test-template
+        name: secrets-manager-test-template

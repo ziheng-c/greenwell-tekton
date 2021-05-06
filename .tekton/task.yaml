@@ -1,26 +1,26 @@
 apiVersion: tekton.dev/v1beta1
 kind: Task
 metadata:
-  name: key-protect
+  name: secrets-manager
 spec:
   params:
-    - name: key-protect-apikey
+    - name: secrets-manager-apikey
       description: api key property
-    - name: key-protect-endpoint
+    - name: secrets-manager-endpoint
       description: ibmcloud endpoint
   steps:
-    - name: key-protect-test
+    - name: secrets-manager-test
       image: ibmcom/pipeline-base-image:2.9
       env:
-        - name: KEY_PROTECT_APIKEY
-          value: $(inputs.params.key-protect-apikey)
-        - name: KEY_PROTECT_ENDPOINT
-          value: $(inputs.params.key-protect-endpoint)
+        - name: SECRETS_MANAGER_APIKEY
+          value: $(inputs.params.secrets-manager-apikey)
+        - name: SECRETS_MANAGER_ENDPOINT
+          value: $(inputs.params.secrets-manager-endpoint)
       command: ["bash", "-c"]
       args:
         - |
           #!/usr/bin/env bash
-          echo "Key Protect Test"
+          echo "Secrets Manager Test"
           echo "================"
-          echo "env: ${KEY_PROTECT_ENDPOINT}"
-          ibmcloud login -a ${KEY_PROTECT_ENDPOINT} --apikey ${KEY_PROTECT_APIKEY} --no-region
+          echo "env: ${SECRETS_MANAGER_ENDPOINT}"
+          ibmcloud login -a ${SECRETS_MANAGER_ENDPOINT} --apikey ${SECRETS_MANAGER_APIKEY} --no-region
