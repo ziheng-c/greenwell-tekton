@@ -1,9 +1,20 @@
 apiVersion: tekton.dev/v1beta1
 kind: Pipeline
 metadata:
-  name: sample-pipeline
+  name: secrets-manager-test-pipeline
+  description: A test pipeline for using Secrets Manager in tekton properties
 spec:
+  params:
+    - name: secrets-manager-apikey
+      description: api key property
+    - name: secrets-manager-endpoint
+      description: ibmcloud endpoint
   tasks:
-    - name: task1
+    - name: secrets-manager
       taskRef:
-        name: task1
+        name: secrets-manager
+      params:
+        - name: secrets-manager-apikey
+          value: $(params.secrets-manager-apikey)
+        - name: secrets-manager-endpoint
+          value: $(params.secrets-manager-endpoint)

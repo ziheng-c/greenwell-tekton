@@ -1,89 +1,41 @@
 apiVersion: tekton.dev/v1beta1
 kind: TriggerTemplate
 metadata:
-  name: pipeline-template
+  name: secrets-manager-test-template
 spec:
   params:
-    - name: gitrevision
-      description: The git revision
-      default: master
-    - name: gitrepositoryurl
-      description: The git repository url
-    - name: message
-      description: The message to print
-      default: This is the default message
+    - name: secrets-manager-apikey
+      description: api key property
+    - name: secrets-manager-endpoint
+      description: ibmcloud endpoint
   resourcetemplates:
-    - apiVersion: tekton.dev/v1beta1
-      kind: PipelineResource
-      metadata:
-        name: git-source-$(uid)
-        labels:
-          triggertemplated: "true"
-          generatedBy: "triggers-example"
-      spec:
-        type: git
-        params:
-          - name: revision
-            value: $(params.gitrevision)
-          - name: url
-            value: $(params.gitrepositoryurl)
     - apiVersion: tekton.dev/v1beta1
       kind: PipelineRun
       metadata:
-        generateName: sample-pipeline-run-$(uid)
+        generateName: secrets-manager-test-
         labels:
           triggertemplated: "true"
-          generatedBy: "triggers-example"
       spec:
         pipelineRef:
-          name: sample-pipeline
+          name: secrets-manager-test-pipeline
+        params:
+          - name: secrets-manager-apikey
+            value: $(params.secrets-manager-apikey)
+          - name: secrets-manager-endpoint
+            value: $(params.secrets-manager-endpoint)
 ---
 apiVersion: tekton.dev/v1beta1
 kind: TriggerBinding
 metadata:
-  name: pipeline-binding
-spec:
-  params:
-    - name: gitrevision
-      value: $(event.head_commit.id)
-    - name: gitrepositoryurl
-      value: $(event.repository.url)
----
-apiVersion: tekton.dev/v1beta1
-kind: TriggerBinding
-metadata:
-  name: manual-pipeline-binding
-spec:
-  params:
-    - name: gitrevision
-      value: v0.32.0
-    - name: gitrepositoryurl
-      value: https://github.com/GoogleContainerTools/skaffold
+  name: secrets-manager-test-binding
 ---
 apiVersion: tekton.dev/v1beta1
 kind: EventListener
 metadata:
-  name: listener
+  name: secrets-manager-test-listener
 spec:
   triggers:
     - binding:
-        name: pipeline-binding
+        name: secrets-manager-test-binding
       template:
-        name: pipeline-template
-      params:
-        - name: message
-          value: Hello from the Git Triggers EventListener!
----
-apiVersion: tekton.dev/v1beta1
-kind: EventListener
-metadata:
-  name: manual-listener
-spec:
-  triggers:
-    - binding:
-        name: manual-pipeline-binding
-      template:
-        name: pipeline-template
-      params:
-        - name: message
-          value: Hello from the Manual Triggers EventListener!
+        name: secrets-manager-test-template
